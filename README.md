@@ -12,6 +12,6 @@ Advanced Python Final Project - Spring 2018 USF
 * UI Designs for each page - Bootstrap 
 * Authentication - JS 
 * Backend - Flask 
- * SQL Lite DB 
- * Matching Algorithms  
+  * SQL Lite DB 
+  * Matching Algorithms  
  
