@@ -1,5 +1,5 @@
 # Gym Web App 
-Advanced Python Final Project - Spring 2018, USF 
+Advanced Python Final Project - Spring 2018 USF 
  
 ## Outline of Site 
 1. Login/Sign Up 
