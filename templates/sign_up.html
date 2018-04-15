@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Register</title>
 </head>
 <body>
-    <h1>Login</h1>
-    <form method="POST" action="/login">
+    <h1>Register</h1>
+    <form method="POST" action="/register">
         {{ form.hidden_tag() }}
         {{ form.username.label }} {{ form.username(size=30) }}
         {{ form.password.label }} {{ form.password(size=20) }}
-        <input type="submit" value="login">
+        <input type="submit" value="sign up">
     </form>
 </body>
 </html>
