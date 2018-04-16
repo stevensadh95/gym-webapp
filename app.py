@@ -1,12 +1,9 @@
-from flask import Flask,render_template,redirect,url_for,request
+from flask import Flask, render_template, redirect, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 import tempfile
 import os.path
-from flask_login import LoginManager, login_user, login_required, logout_user,UserMixin
-
-
+from flask_login import LoginManager, login_user, login_required, logout_user, UserMixin
 from forms import SignupForm
-
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
@@ -16,21 +13,24 @@ login_manager.init_app(app)
 app.secret_key = '2305thgwiovhewncry83ufcnnd0dci329yt8fbw'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/database.sqlite'
 
+
 @login_manager.user_loader
 def load_user(username):
-    return User.query.filter_by(username = username).first()
+    return User.query.filter_by(username=username).first()
+
 
 def init_db():
     db.init_app(app)
     db.app = app
     db.create_all()
 
-class User(db.Model,UserMixin):
+
+class User(db.Model, UserMixin):
     username = db.Column(db.String(80), primary_key=True, unique=True)
     password = db.Column(db.String(80))
 
     def __init__(self, username, password):
-        self.username= username
+        self.username = username
         self.password = password
 
     def __repr__(self):
@@ -40,24 +40,23 @@ class User(db.Model,UserMixin):
         return str(self.username)
 
 
-
 @app.route('/')
 def index():
-    return "Home"
+    return render_template('index.html')
 
 
-@app.route('/register', methods=['GET','POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     form = SignupForm()
 
-    if request.method=='GET':
-        return render_template("sign_up.html",form=form)
+    if request.method == 'GET':
+        return render_template("sign_up.html", form=form)
     if request.method == 'POST':
         if form.validate_on_submit():
             if User.query.filter_by(username=form.username.data).first():
                 return "Already exists"
             else:
-                new_user =  User(form.username.data,form.password.data)
+                new_user = User(form.username.data, form.password.data)
                 db.session.add(new_user)
                 db.session.commit()
                 login_user(new_user)
@@ -67,16 +66,15 @@ def register():
             return "form didn't validate"
 
 
-@app.route('/login', methods=['GET','POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-
     form = SignupForm()
 
     if request.method == 'GET':
         return render_template('login.html', form=form)
     elif request.method == 'POST':
         if form.validate_on_submit():
-            user=User.query.filter_by(username=form.username.data).first()
+            user = User.query.filter_by(username=form.username.data).first()
             if user:
                 if user.password == form.password.data:
                     login_user(user)
@@ -104,5 +102,3 @@ def protected():
 def logout():
     logout_user()
     return "Logged out"
-
-
