@@ -78,10 +78,11 @@ def login():
             if user:
                 if user.password == form.password.data:
                     login_user(user)
-                    return "User logged in"
+                    return render_template('logged_in.html')
                 else:
                     return "Wrong password"
-
+            else:
+                return "User does not exist"
     else:
         return "form not validated"
 
