@@ -60,7 +60,7 @@ def register():
                 db.session.add(new_user)
                 db.session.commit()
                 login_user(new_user)
-                return "user added"
+                return render_template('logged_in.html')
 
         else:
             return "form didn't validate"
