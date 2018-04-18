@@ -65,11 +65,6 @@ def edit_user(user_id,name,**attributes):
     connection.commit()
 
 
-def match(user,other,isLiked):
-    # if is_match(user,other):
-    #     pass # handle match
-    cursor.execute('''INSERT INTO match(user_id,other_id,likes)
-         VALUES (?,?,?)''', (user, other, isLiked))
 
 def like_user(user,other,isLiked):
     cursor.execute('''INSERT INTO match(user_id,other_id,likes)
@@ -91,6 +86,7 @@ def get_users_to_judge(user_id):
 
 def delete_user(user_id):
     cursor.execute('''DELETE FROM user WHERE user_id = {}'''.format(user_id))
+    delete_matches_by_user_id(user_id)
 
 def delete_matches_by_user_id(user_id):
     cursor.execute('''DELETE FROM match WHERE user_id = {}'''.format(user_id))

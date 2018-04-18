@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request,flash
 from flask_sqlalchemy import SQLAlchemy
 import tempfile
 import os.path
@@ -12,7 +12,6 @@ login_manager.init_app(app)
 
 app.secret_key = '2305thgwiovhewncry83ufcnnd0dci329yt8fbw'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/database.sqlite'
-
 
 @login_manager.user_loader
 def load_user(username):
@@ -60,7 +59,10 @@ def register():
                 db.session.add(new_user)
                 db.session.commit()
                 login_user(new_user)
-                return render_template('logged_in.html')
+
+                flash("Registered successfully", "info")
+                return redirect(url_for("index"))
+                #return render_template('logged_in.html')
 
         else:
             return "form didn't validate"
@@ -78,13 +80,25 @@ def login():
             if user:
                 if user.password == form.password.data:
                     login_user(user)
-                    return render_template('logged_in.html')
+                    flash("logged in successfully", "success")
+                    return redirect(url_for("index"))
                 else:
-                    return "Wrong password"
+                    flash("password wrong", "danger")
+                    return redirect(url_for("login"))
             else:
-                return "User does not exist"
+                flash("User does not exist","danger")
+                return redirect(url_for("login"))
     else:
         return "form not validated"
+
+
+
+# @app.route('/matches')
+# @login_required
+# def matches():
+#     #user_id = get from session
+#     #my_matches=get_matches(user_id)
+#     return render_template("matches.html",profiles=my_matches)
 
 
 if __name__ == '__main__':
