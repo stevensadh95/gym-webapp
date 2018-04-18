@@ -38,10 +38,19 @@
         </div>
         <div class="pull-right">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+                {% if current_user.is_authenticated%}
                 <li class="nav-item">
+                    <a class="btn btn-lg btn-success" href="{{url_for('logout')}}" role="button">Log Out</a>
+                    <!--<a class="nav-link" href="#">Log In</a>-->
+
+                </li>
+                {%else%}
+                  <li class="nav-item">
                     <a class="btn btn-lg btn-success" href="/login" role="button">Log In</a>
                     <!--<a class="nav-link" href="#">Log In</a>-->
                 </li>
+                {%endif%}
             </ul>
         </div>
     </nav>

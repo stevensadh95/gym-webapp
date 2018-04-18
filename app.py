@@ -70,6 +70,11 @@ def register():
             return redirect(url_for(register))
 
 
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = SignupForm()
@@ -114,8 +119,4 @@ def protected():
     return "protected area"
 
 
-@app.route("/logout")
-@login_required
-def logout():
-    logout_user()
-    return "Logged out"
+

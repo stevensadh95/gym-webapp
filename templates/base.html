@@ -1,6 +1,10 @@
 <html>
 <!doctype html>
 <title>My Application</title>
+
+{%if current_user.is_authenticated:%}
+<p>hello {{current_user.username}}</p>
+{%endif %}
 {% with messages = get_flashed_messages(with_categories=true) %}
 
     {% if messages %}
