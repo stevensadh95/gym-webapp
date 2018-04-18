@@ -7,20 +7,27 @@
         <form method="POST" action="/register">
             {{ form.hidden_tag() }}
             {{ form.username.label }} {{ form.username(size=30) }} <br>
-            {{ form.password.label }} {{ form.password(size=20) }} <br>
+            {{ form.password.label }} {{ form.password(size=20) }} <br><br>
+            First name: {{ profile.name(size=20) }} <br><br>
+            Email: {{ profile.email() }} <br><br>
+            State: {{ profile.state() }} <br><br>
+            Sex: {{ profile.sex() }}
+            Birthday: {{ profile.birthday() }} <br><br>
 
-            First name: <br>
-            <input type="text" name=firstname>
-            <br><br>Email: <br>
-            <input type="email" name=email> <br><br> Sex: <br>
-            <input type="radio" name="sex" value="male"> Male<br>
-            <input type="radio" name="sex" value="female"> Female<br>
-            <br>State: <br>
-            <input type="" name=state> <br><br> Birthday:
 
-            <br>
-            <input type="month" name="birthday">
-            <br><br>
+
+            <!--First name: <br>-->
+            <!--<input type="text" name=firstname>-->
+            <!--<br><br>Email: <br>-->
+            <!--<input type="email" name=email> <br><br> Sex: <br>-->
+            <!--<input type="radio" name="sex" value="male"> Male<br>-->
+            <!--<input type="radio" name="sex" value="female"> Female<br>-->
+            <!--<br>State: <br>-->
+            <!--<input type="" name=state> <br><br> Birthday:-->
+
+            <!--<br>-->
+            <!--<input type="month" name="birthday">-->
+            <!--<br><br>-->
             <input type="submit" value="sign up">
             <br>
         </form>
