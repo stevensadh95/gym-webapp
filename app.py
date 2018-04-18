@@ -62,7 +62,6 @@ def register():
 
                 flash("Registered successfully", "info")
                 return redirect(url_for("index"))
-                #return render_template('logged_in.html')
 
         else:
             return "form didn't validate"

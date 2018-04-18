@@ -26,10 +26,10 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="/">About</a>
                 </li>
                 <!--<li class="nav-item">
                     <a class="nav-link" href="#">Catalogue</a>
@@ -45,12 +45,14 @@
             </ul>
         </div>
     </nav>
+    {% block content %}
     <div class="jumbotron">
         <h1 class="logo">GYMDER</h1>
         <!--<h2 class="logo">INC</h2>-->
         <p><a class="btn btn-lg btn-success" href="/register" role="button">Sign up today</a>
 
     </div>
+    {% endblock %}
     <div class="container">
     </div>
     <div id="insides" class="container content">
