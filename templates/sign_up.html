@@ -1,13 +1,31 @@
-{% extends "index.html" %}
-{% block content %}
-<div class="jumbotron">
-    <h1 class="logo">GYMDER</h1>
-    <h2 class="logo">SIGNUP</h2>
-    <form method="POST" action="/register">
-    {{ form.hidden_tag() }}
-    {{ form.username.label }} {{ form.username(size=30) }}
-    {{ form.password.label }} {{ form.password(size=20) }}
-    <input type="submit" value="sign up">
-</form>
-</div>
+{% extends "base.html" %}
+{% block body %}
+<body>
+    <div class="jumbotron">
+        <h1 class="logo">GYMDER</h1>
+        <h2 class="logo">Create your Gymder account here</h2>
+        <form method="POST" action="/register">
+            {{ form.hidden_tag() }}
+            {{ form.username.label }} {{ form.username(size=30) }} <br>
+            {{ form.password.label }} {{ form.password(size=20) }} <br>
+
+            First name: <br>
+            <input type="text" name=firstname>
+            <br><br>Email: <br>
+            <input type="email" name=email> <br><br> Sex: <br>
+            <input type="radio" name="sex" value="male"> Male<br>
+            <input type="radio" name="sex" value="female"> Female<br>
+            <br>State: <br>
+            <input type="" name=state> <br><br> Birthday:
+
+            <br>
+            <input type="month" name="birthday">
+            <br><br>
+            <input type="submit" value="sign up">
+            <br>
+        </form>
+        <p>Bio (optional)</p>
+        <textarea name="bio" form="register">Enter bio here...</textarea>
+    </div>
+</body>
 {% endblock %}
