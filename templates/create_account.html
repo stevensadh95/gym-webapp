@@ -6,8 +6,10 @@
     <title>Create an account</title>
 </head>
 
-<body>
-    <h1>Create your Gymder account here</h1>
+{% extends "index.html" %}
+{% block content %}
+<div class="jumbotron">
+    <h1 class="logo">Create your Gymder account here</h1>
     <form method="POST" id='account_form'>
         First name: <br>
         <input type="text" name=firstname>
@@ -26,6 +28,8 @@
     </form>
     <p>Bio (optional)</p>
     <textarea name="bio" form="account_form">Enter bio here...</textarea>
-</body>
+</div>
+
+{% endblock %}
 
 </html>

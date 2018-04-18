@@ -61,7 +61,8 @@ def register():
                 login_user(new_user)
 
                 flash("Registered successfully", "info")
-                return redirect(url_for("index"))
+                #return redirect(url_for("index"))
+                return render_template("create_account.html", form=form)
 
         else:
             return "form didn't validate"
