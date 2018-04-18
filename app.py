@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request,flash
 from flask_sqlalchemy import SQLAlchemy
 import tempfile
 import os.path
-from flask_login import LoginManager, login_user, login_required, logout_user, UserMixin
+from flask_login import LoginManager, login_user, login_required, logout_user, UserMixin,current_user
 from forms import SignupForm
 
 app = Flask(__name__)
@@ -74,6 +74,14 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.route('/matches')
+def match_list():
+    id = current_user.username
+
+    # matches = get_matches()
+    return render_template("matches.html",id=id)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
