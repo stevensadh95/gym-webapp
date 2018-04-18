@@ -1,3 +1,9 @@
+
+
+import re
+from datetime import datetime
+
+
 from flask import Flask, render_template, redirect, url_for, request,flash
 from flask_sqlalchemy import SQLAlchemy
 import tempfile
@@ -8,6 +14,7 @@ import sqlite3
 
 
 
+
 app = Flask(__name__)
 db = SQLAlchemy(app)
 login_manager = LoginManager()
@@ -15,6 +22,13 @@ login_manager.init_app(app)
 
 app.secret_key = '2305thgwiovhewncry83ufcnnd0dci329yt8fbw'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/database.sqlite'
+
+
+def age_from_birthday(birthday):
+    bdate = datetime.strptime(birthday,"%Y-%m-%d")
+    today=datetime.today()
+    return int((today - bdate).days/365)
+
 
 @login_manager.user_loader
 def load_user(username):
@@ -117,8 +131,11 @@ def match_list():
     connection = sqlite3.connect('gymder.db')
     cursor = connection.cursor()
     matches = get_user(cursor,username)
+
+    age = age_from_birthday(matches[0][5])
+
     connection.commit()
-    return render_template("matches.html",id=id,matches=matches)
+    return render_template("matches.html",id=id,matches=matches,age=age)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -142,6 +159,8 @@ def login():
                 return redirect(url_for("login"))
     else:
         return "form not validated"
+
+
 
 
 
