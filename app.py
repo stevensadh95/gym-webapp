@@ -63,7 +63,7 @@ def register():
 
                 flash("Registered successfully", "info")
                 #return redirect(url_for("index"))
-                return render_template("create_account.html", form=form)
+                return render_template("sign_up.html", form=form)
 
         else:
             flash("Form didn't validate", "danger")

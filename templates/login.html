@@ -1,6 +1,6 @@
-{% extends "index.html" %}
-{% block content %}
-<div class="jumbotron">
+{% extends "base.html" %}
+{% block body %}
+<!--<div class="jumbotron">
     <h1 class="logo">GYMDER</h1>
     <h2 class="logo">LOGIN</h2>
     <form method="POST" action="/login">
@@ -8,6 +8,18 @@
     {{ form.username.label }} {{ form.username(size=30) }}
     {{ form.password.label }} {{ form.password(size=20) }}
     <input type="submit" value="login">
-</form>
-</div>
+</form>-->
+
+<body>
+    <div class="jumbotron">
+        <h1 class="logo">GYMDER</h1>
+        <h2 class="logo">LOGIN</h2>
+        <form method="POST" action="/login">
+        {{ form.hidden_tag() }}
+        {{ form.username.label }} {{ form.username(size=30) }}
+        {{ form.password.label }} {{ form.password(size=20) }}
+        <input type="submit" value="login">
+        </form>
+    </div>
+</body>
 {% endblock %}
