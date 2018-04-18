@@ -53,7 +53,8 @@ def register():
     if request.method == 'POST':
         if form.validate_on_submit():
             if User.query.filter_by(username=form.username.data).first():
-                return "Already exists"
+                flash("User Already Exists", "danger")
+                return redirect(url_for("register"))
             else:
                 new_user = User(form.username.data, form.password.data)
                 db.session.add(new_user)
@@ -65,7 +66,8 @@ def register():
                 return render_template("create_account.html", form=form)
 
         else:
-            return "form didn't validate"
+            flash("Form didn't validate", "danger")
+            return redirect(url_for(register))
 
 
 @app.route('/login', methods=['GET', 'POST'])
