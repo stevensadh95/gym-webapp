@@ -33,13 +33,16 @@ def like_user(user,other,isLiked):
     connection.commit()
 
 '''
-Returns list of user_ids (str) of each match you hve
+Returns matches that user has as tuples
 '''
+
 def get_matches(user):
-    tuples = cursor.execute("""SELECT other_id FROM match WHERE user_id={user}
-    AND likes='Yes' INTERSECT SELECT user_id FROM match WHERE other_id={user} AND likes='Yes'""".format(user=user)).fetchall()
-    users_matched_with = [x[0] for x in tuples]
-    return users_matched_with
+    tuples = cursor.execute("""
+    SELECT * from user where user_id=
+    (SELECT other_id FROM match WHERE user_id={user}
+    AND likes='Yes' INTERSECT SELECT user_id FROM match WHERE other_id={user} AND likes='Yes')""".format(user=user)).fetchall()
+    return tuples
+
 
 def get_users_to_judge(user_id):
     return cursor.execute('''SELECT user_id FROM user WHERE user_id != {x} AND user_id NOT IN
@@ -53,10 +56,10 @@ def delete_matches_by_user_id(user_id):
     cursor.execute('''DELETE FROM match WHERE user_id = {}'''.format(user_id))
 
 
-print("every user in DB")
-tuples = cursor.execute('''SELECT * from user''').fetchall()
-for tuple in tuples:
-    print(tuple)
+# print("every user in DB")
+# tuples = cursor.execute('''SELECT * from user''').fetchall()
+# for tuple in tuples:
+#     print(tuple)
 
 # example call for add_user
 #add_user('Steven Sadhwani', "sadhwani@mail.usf.edu", "NH", "Male", "December 8 1995", "djk")
