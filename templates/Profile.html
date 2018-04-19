@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends "index.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+
+</head>
+<body>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+    </div>
+    <div class="col-sm">
+      <div style="padding:15px;">
+   <div class="card"  style="width: 20rem;">
+       <div class="card-header"><h5>@{{info[0]}}</h5></div>
+  <img class="card-img-top" src="{{info[6]}}" alt="Card image cap">
+  <div class="card-body">
+    <h4 class="card-text">{{info[1]}}</h4>
+   <p>Email: {{info[2]}}</p>
+     <p>State: {{info[3]}}</p>
+      <p>Sex : {{info[4]}}</p>
+  </div>
+
+  <div class="card-body">
+    {{info[7]}}
+  </div>
+</div>
+    <br>
+
+</div>
+    </div>
+    <div class="col-sm">
+    </div>
+  </div>
+</div>
+
+
+
+
+</body>
+{% endblock %}
+
