@@ -4,7 +4,8 @@
     <div class="jumbotron">
         <h1 class="logo">GYMDER</h1>
         <h2 class="logo">Create your Gymder account here</h2>
-        <form method="POST" action="/register">
+
+        <form method="POST" action="/register" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             {{ form.username.label }} {{ form.username(size=30) }} <br>
             {{ form.password.label }} {{ form.password(size=20) }} <br><br>
@@ -15,19 +16,8 @@
             Birthday: {{ profile.birthday() }} <br><br>
 
 
+            Upload image <br>{{ profile.picture }}<br><br>
 
-            <!--First name: <br>-->
-            <!--<input type="text" name=firstname>-->
-            <!--<br><br>Email: <br>-->
-            <!--<input type="email" name=email> <br><br> Sex: <br>-->
-            <!--<input type="radio" name="sex" value="male"> Male<br>-->
-            <!--<input type="radio" name="sex" value="female"> Female<br>-->
-            <!--<br>State: <br>-->
-            <!--<input type="" name=state> <br><br> Birthday:-->
-
-            <!--<br>-->
-            <!--<input type="month" name="birthday">-->
-            <!--<br><br>-->
             <input type="submit" value="sign up">
             <br>
         </form>

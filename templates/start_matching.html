@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends "index.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Start Matching</title>
+</head>
+<body>
+<div  style="padding:15px;">
+    {% if other %}
+    <p>{{other}}</p>
+   <div class="card"  style="width: 18rem;">
+  <img class="card-img-top" src="{{other[6]}}" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{other[1]}}</h5> <h5 class="card-title">{{age}}</h5>
+    <p class="card-text"> {{other[3]}}</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Bio goes here</li>
+  </ul>
+
+</div>
+
+    <form action="/start_matching" method="POST">
+        <input type="submit" name="submit" value="Yes">
+<input type="submit" name="submit" value="No">
+    </form>
+{%endif%}
+
+<!--<span><button type="button" class="btn btn-success">Yes</button><button type="button" class="btn btn-danger">No</button></span>-->
+</div>
+
+
+</body>
+{% endblock %}

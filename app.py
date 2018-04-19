@@ -15,10 +15,14 @@ import sqlite3
 
 
 
+
 app = Flask(__name__)
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+random_user = None
+
 
 app.secret_key = '2305thgwiovhewncry83ufcnnd0dci329yt8fbw'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/database.sqlite'
@@ -84,9 +88,6 @@ def register():
 
         if profile.validate_on_submit():
 
-
-
-
             connection = sqlite3.connect('gymder.db')
             cursor = connection.cursor()
 
@@ -94,9 +95,20 @@ def register():
                 flash("Username Already Exists", "danger")
                 return redirect(url_for("register"))
 
-            user_profile = Profile(profile.username.data,profile.name.data,profile.email.data,profile.state.data,
-                    profile.sex.data,profile.birthday.data, profile.picture.data,profile.bio.data)
-            add_user(cursor,user_profile)
+            filename = profile.picture.data.filename
+
+            profile.picture.data.save('static/uploads/' + filename)
+
+            path = 'static/uploads/' + filename
+
+            # user_profile = Profile(profile.username.data,profile.name.data,profile.email.data,profile.state.data,
+            #         profile.sex.data,profile.birthday.data, profile.picture.data,profile.bio.data)
+            # add_user(cursor,user_profile)
+
+            user_profile = Profile(profile.username.data, profile.name.data, profile.email.data, profile.state.data,
+                                   profile.sex.data, profile.birthday.data, path, profile.bio.data)
+            add_user(cursor, user_profile)
+
             connection.commit()
 
 
@@ -112,7 +124,8 @@ def register():
 
                 flash("Registered successfully", "info")
                 #return redirect(url_for("index"))
-                return render_template("sign_up.html", form=form,profile=profile)
+                #return render_template("sign_up.html", form=form,profile=profile)
+                return redirect(url_for("index"))
 
         else:
             flash("Form didn't validate", "danger")
@@ -130,12 +143,70 @@ def match_list():
     username = current_user.username
     connection = sqlite3.connect('gymder.db')
     cursor = connection.cursor()
-    matches = get_user(cursor,username)
 
-    age = age_from_birthday(matches[0][5])
+    #currently only returns one match only for some reason.
+    matches = get_matches(cursor, username)
+
+    #age = age_from_birthday(matches[0][5]) # need to figure out how to calculate age in template itself.
 
     connection.commit()
-    return render_template("matches.html",id=id,matches=matches,age=age)
+    return render_template("matches.html",username=username,matches=matches,age=1)
+
+
+@app.route('/start_matching', methods=['GET','POST'])
+def start_matching():
+    username = current_user.username
+
+    judge_user = ''
+    global random_user
+
+    if request.method == 'GET':
+        connection = sqlite3.connect('gymder.db')
+        cursor = connection.cursor()
+        other_users = get_users_to_judge(cursor,username).fetchall()
+
+        if not other_users:
+            flash("No more users to match with",category="danger")
+            return render_template("start_matching.html",other=None)
+
+        random_user = other_users[0]
+        age = age_from_birthday(random_user[5])
+
+        connection.close()
+
+        return render_template("start_matching.html", other=random_user,age=age)
+
+    elif request.method == 'POST':
+        connection = sqlite3.connect('gymder.db')
+        cursor = connection.cursor()
+        if request.form['submit'] == 'Yes':
+            judge_user = 'Yes'
+        elif request.form['submit'] == 'No':
+            judge_user = 'No'
+
+        like_user(cursor,username,random_user,judge_user)
+        connection.commit()
+        # process yes/no answer and add to match table
+        return redirect(url_for('start_matching'))
+
+    else:
+        render_template("start_matching.html",other=None)
+
+
+    # maybe use a generator here
+
+    # def load_new_user():
+    #     for user in other_users:
+    #         yield user
+    #     return render_template("start_matching.html", others = other_users)
+    # for user in other_users:
+    #     return render_template("matches.html", username=next(load_new_user))
+
+
+    #age = age_from_birthday(matches[0][5])
+
+    # connection.commit()
+    return render_template("index.html")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -196,7 +267,7 @@ def edit_user(cursor,user_id,name,**attributes):
 
 def like_user(cursor,user,other,isLiked):
     cursor.execute('''INSERT INTO match(username,other_id,likes)
-         VALUES (?,?,?)''', (user, other, isLiked))
+         VALUES (?,?,?)''', (user, other[0], isLiked))
     #connection.commit()
 
 '''
@@ -205,19 +276,19 @@ Returns matches that user has as tuples
 
 def get_matches(cursor,user):
     tuples = cursor.execute("""
-    SELECT * from user where username=
+    SELECT * from user where username IN
     (SELECT other_id FROM match WHERE username='{user}'
     AND likes='Yes' INTERSECT SELECT username FROM match WHERE other_id='{user}' AND likes='Yes')""".format(user=user)).fetchall()
     return tuples
 
 
 def get_users_to_judge(cursor,username):
-    return cursor.execute('''SELECT username FROM user WHERE username != {x} AND username NOT IN
-    (SELECT m.other_id FROM match m where m.username = {x})'''.format(x = username))
+    return cursor.execute('''SELECT * from user where username = (SELECT username FROM user WHERE username != '{x}' AND username NOT IN
+    (SELECT m.other_id FROM match m where m.username = '{x}'))'''.format(x = username))
 
 def delete_user(cursor,username):
     cursor.execute("DELETE FROM user WHERE username = '{}'".format(username))
-    delete_matches_by_username(username)
+    delete_matches_by_username(cursor,username)
     #connection.commit()
 
 def delete_matches_by_username(cursor,username):

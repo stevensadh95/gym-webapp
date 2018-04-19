@@ -38,9 +38,14 @@ Returns matches that user has as tuples
 
 def get_matches(user):
     tuples = cursor.execute("""
-    SELECT * from user where username=
+    SELECT * from user where username IN
     (SELECT other_id FROM match WHERE username='{user}'
     AND likes='Yes' INTERSECT SELECT username FROM match WHERE other_id='{user}' AND likes='Yes')""".format(user=user)).fetchall()
+
+#     tuples = cursor.execute("""
+# SELECT other_id FROM match WHERE username='{user}'
+#         AND likes='Yes' INTERSECT SELECT username FROM match WHERE other_id='{user}' AND likes='Yes'""".format(
+#         user=user)).fetchall()
     return tuples
 
 
@@ -58,22 +63,32 @@ def delete_matches_by_username(username):
     cursor.execute("DELETE FROM match WHERE other_id = '{}'".format(username))
     connection.commit()
 
+def get_user(username):
+    return cursor.execute("SELECT * from user where username='{}'".format(username)).fetchall()
 
-# print("every user in DB")
-# tuples = cursor.execute('''SELECT * from user''').fetchall()
-# for tuple in tuples:
-#     print(tuple)
+
+print("every user in DB")
+tuples = cursor.execute('''SELECT * from user''').fetchall()
+for tuple in tuples:
+    print(tuple)
 
 # example call for add_user
 # add_user('sadhwani', "steven","sadhwani@mail.usf.edu", "NH", "Male", "December 8 1995", "djk", " ffs)
 
 connection.commit() # need to commit changes.
-
+#
 # For debugging match table
-# print(cursor.execute('''SELECT * from match''').fetchall())
+print(cursor.execute('''SELECT * from match''').fetchall())
+
+# delete_user("eddie")
+# delete_user("Steve")
 
 # To test get_matches function against first DB element
-# print(get_matches("<username>"))
+print(get_matches("eddie"))
 
 
 connection.close()
+
+
+#to delete in b
+# models.User.query.delete()

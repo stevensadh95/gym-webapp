@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, RadioField, SubmitField,SelectField
 from wtforms.validators import DataRequired,ValidationError
 from wtforms.fields.html5 import DateField
+from flask_wtf.file import FileField,FileAllowed
 
 class LoginForm(FlaskForm):
     username= StringField("Username", validators=[DataRequired()])
@@ -16,11 +17,11 @@ class SignupForm(FlaskForm):
 class ProfileForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     name = StringField("Name", validators=[DataRequired()])
-    email = StringField("Email")
-    state = SelectField("State",choices=[('NH','Fl')])
-    sex = RadioField("Sex",choices=[('Male','Male'),('Female','Female')])
-    birthday = DateField("DatePicker")
-    picture = StringField("Image")
+    email = StringField("Email",validators=[DataRequired()])
+    state = SelectField("State",choices=[('NH','Fl')],validators=[DataRequired()])
+    sex = RadioField("Sex",choices=[('Male','Male'),('Female','Female')],validators=[DataRequired()])
+    birthday = DateField("DatePicker", validators=[DataRequired()])
+    picture = FileField("Image",validators=[DataRequired(),FileAllowed(['jpg', 'png'], 'Images only!')])
     bio = StringField("Bio")
 
     # def validate_username(self,username):
