@@ -29,7 +29,7 @@
                     <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/">About</a>
+                    <a class="nav-link" href="{{url_for('about')}}">About</a>
                 </li>
                 {% if current_user.is_authenticated%}
                 <li class="nav-item">
@@ -39,21 +39,27 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{url_for('match_list')}}">View Matches</a>
                 </li>
+
+                 <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('profile')}}">Profile</a>
+                </li>
                 {%endif%}
-                <!--<li class="nav-item">
-                    <a class="nav-link" href="#">Catalogue</a>
-                </li>-->
+
             </ul>
         </div>
         <div class="pull-right">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 
                 {% if current_user.is_authenticated%}
+                              <div class="alert alert-info alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    Logged in as {{current_user.username}}</div>
                 <li class="nav-item">
                     <a class="btn btn-lg btn-success" href="{{url_for('logout')}}" role="button">Log Out</a>
                     <!--<a class="nav-link" href="#">Log In</a>-->
 
                 </li>
+
                 {%else%}
                   <li class="nav-item">
                     <a class="btn btn-lg btn-success" href="/login" role="button">Log In</a>
@@ -63,11 +69,7 @@
             </ul>
         </div>
     </nav>
-{%if current_user.is_authenticated:%}
-<div class="alert alert-info alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-Logged in as {{current_user.username}}</div>
-{%endif %}
+
 {% with messages = get_flashed_messages(with_categories=true) %}
 
     {% if messages %}

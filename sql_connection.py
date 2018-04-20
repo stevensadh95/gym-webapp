@@ -80,11 +80,11 @@ connection.commit() # need to commit changes.
 # For debugging match table
 print(cursor.execute('''SELECT * from match''').fetchall())
 
-# delete_user("eddie")
-# delete_user("Steve")
-
-# To test get_matches function against first DB element
-print(get_matches("eddie"))
+# delete_user("theBeast")
+# delete_user("sadhwani")
+#
+# # To test get_matches function against first DB element
+# print(get_matches("eddie"))
 
 
 connection.close()

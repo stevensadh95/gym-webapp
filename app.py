@@ -14,8 +14,6 @@ import sqlite3
 
 
 
-
-
 app = Flask(__name__)
 db = SQLAlchemy(app)
 login_manager = LoginManager()
@@ -74,6 +72,11 @@ class Profile():
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -150,8 +153,21 @@ def match_list():
     #age = age_from_birthday(matches[0][5]) # need to figure out how to calculate age in template itself.
 
     connection.commit()
-    return render_template("matches.html",username=username,matches=matches,age=1)
+    return render_template("matches.html", username=username, matches=matches, getage=age_from_birthday)
 
+@app.route('/profile')
+def profile():
+    username = current_user.username
+    connection = sqlite3.connect('gymder.db')
+    cursor = connection.cursor()
+
+    user_info = get_user(cursor, username)
+    age = age_from_birthday(user_info[5])
+    return render_template("Profile.html", info=user_info, age=age)
+
+
+def ret5():
+    return 5
 
 @app.route('/start_matching', methods=['GET','POST'])
 def start_matching():
@@ -297,7 +313,7 @@ def delete_matches_by_username(cursor,username):
     #connection.commit()
 
 def get_user(cursor,username):
-    return cursor.execute("SELECT * from user where username='{}'".format(username)).fetchall()
+    return cursor.execute("SELECT * from user where username='{}'".format(username)).fetchall()[0]
 
 
 

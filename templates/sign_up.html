@@ -14,15 +14,12 @@
             State: {{ profile.state() }} <br><br>
             Sex: {{ profile.sex() }}
             Birthday: {{ profile.birthday() }} <br><br>
-
-
             Upload image <br>{{ profile.picture }}<br><br>
+            Bio (optional)<br> {{profile.bio()}} <br><br>
 
             <input type="submit" value="sign up">
             <br>
         </form>
-        <p>Bio (optional)</p>
-        <textarea name="bio" form="register">Enter bio here...</textarea>
     </div>
 </body>
 {% endblock %}
