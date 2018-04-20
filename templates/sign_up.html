@@ -7,17 +7,20 @@
 
         <form method="POST" action="/register" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
-            {{ form.username.label }} {{ form.username(size=30) }} <br>
-            {{ form.password.label }} {{ form.password(size=20) }} <br><br>
-            First name: {{ profile.name(size=20) }} <br><br>
-            Email: {{ profile.email() }} <br><br>
+            {{ form.username.label }} {{ form.username(size=30) }}
+            {{ form.password.label }} {{ form.password(size=30) }} <br><br>
+            First name: {{ profile.name(size=29) }}
+            Email: {{ profile.email(size = 34) }} <br><br>
             State: {{ profile.state() }} <br><br>
             Sex: {{ profile.sex() }}
             Birthday: {{ profile.birthday() }} <br><br>
             Upload image <br>{{ profile.picture }}<br><br>
             Bio (optional)<br> {{profile.bio()}} <br><br>
 
+            <p style="text-align:center;">
             <input type="submit" value="sign up">
+            </p>
+
             <br>
         </form>
     </div>
