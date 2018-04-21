@@ -11,36 +11,37 @@
 <body>
 
 <div class="container">
-  <div class="row">
-    <div class="col-sm">
+    <div class="row">
+        <div class="col-sm">
+
+        </div>
+        <div class="col-sm">
+            <div style="padding:15px;">
+                <div class="card"  style="width: 20rem;">
+                    <div class="card-header bg-dark text-white">
+                        <h5 align="center">@{{info[0]}}</h5>
+                    </div>
+                    <img class="card-img-top" src="{{info[6]}}" alt="Card image cap">
+                    <div class="card text-white bg-dark mb-3" style="max-width: 20rem;">
+                        <div class="card-header" align="center"><h5>{{info[1]}}</h5></div>
+                        <div class="card-body">
+                            <h5 class="card-title" align="center">Bio</h5>
+                            <p class="card-text" align="center">{{info[7]}}</p>
+                        </div>
+                        <p>Age: <b>{{age}}</b> &emsp; Birthday: <b>{{info[5]}}</b></p>
+                        <p></p>
+                        <p>State: <b>{{info[3]}}</b> &emsp; Sex: <b>{{info[4]}}</b></p>
+                        <p></p>
+                        <p>Email: <b>{{info[2]}}</b></p>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+        <div class="col-sm">
+
+        </div>
     </div>
-    <div class="col-sm">
-      <div style="padding:15px;">
-   <div class="card"  style="width: 20rem;">
-       <div class="card-header"><h5>@{{info[0]}}</h5></div>
-  <img class="card-img-top" src="{{info[6]}}" alt="Card image cap">
-  <div class="card-body">
-    <h4 class="card-text">{{info[1]}}</h4>
-    <p>Age: {{age}}</p>
-      <p>Birthday: {{info[5]}}</p>
-      <p>Email: {{info[2]}}</p>
-     <p>State: {{info[3]}}</p>
-      <p>Sex: {{info[4]}}</p>
-
-  </div>
-
-  <div class="card-body">
-      <h5>Bio:</h5>  {{info[7]}}
-
-  </div>
-</div>
-    <br>
-
-</div>
-    </div>
-    <div class="col-sm">
-    </div>
-  </div>
 </div>
 
 

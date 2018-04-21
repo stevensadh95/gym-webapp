@@ -7,34 +7,29 @@
     <meta charset="UTF-8">
     <title>Start Matching</title>
 </head>
+
 <body>
-<div  style="padding:15px;">
+<div align="center" style="padding:15px;">
     {% if other %}
     <!--<p>{{other}} Debugging purposes </p>-->
-   <div class="card"  style="width: 18rem;">
-  <img class="card-img-top" src="{{other[6]}}" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">{{other[1]}}</h5> <h5 class="card-title">{{age}}</h5>
-    <p class="card-text"> {{other[3]}}</p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">{{other[7]}}</li>
-  </ul>
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{other[6]}}" alt="Card image cap">
+        <div class="card-body bg-dark text-white">
+            <h5 class="card-title">{{other[1]}}</h5> <h5 class="card-title">{{age}}, {{other[3]}}</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item bg-dark text-white">{{other[7]}}</li>
+        </ul>
 
-           <form action="/start_matching" method="POST">
-
-        <input type="submit" class="btn btn-success" style="width:140px" name="submit" value="Yes">
-<input type="submit" class="btn btn-danger" style="width:140px" name="submit" value="No">
-    </form>
-
+        <form action="/start_matching" method="POST">
+            <input type="submit" class="btn btn-success" style="width:140px" name="submit" value="Yes">
+            <input type="submit" class="btn btn-danger" style="width:140px" name="submit" value="No">
+        </form>
 </div>
-
-
 {%endif%}
 
 <!--<span><button type="button" class="btn btn-success">Yes</button><button type="button" class="btn btn-danger">No</button></span>-->
 </div>
-
 
 </body>
 {% endblock %}

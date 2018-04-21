@@ -9,31 +9,32 @@
 </head>
 <body>
 
-<div  style="padding:15px;">
-
+<div align="center" style="padding:15px;">
     {% for match in matches %}
 
-   <div class="card"  style="width: 18rem;">
-       <!--<div id="image" style="height:300px; overflow:hidden;">-->
-  <img class="card-img-top" src="{{match[6]}}" style="height:300px; width:275px;" alt="Card image cap">
-       <!--</div>-->
+    <div class="card" align="center" style="width: 18rem;">
+        <!--<div id="image" style="height:300px; overflow:hidden;">-->
+        <img class="card-img-top" src="{{match[6]}}" style="height:300px; width:275px;" alt="Card image cap">
+        <!--</div>-->
 
-  <div class="card-body">
-    <h5 class="card-title">{{match[1]}}</h5> <h5 class="card-title">{{getage(match[5])}}</h5>
-    <p class="card-text"> {{match[3]}}</p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">{{match[7]}}</li>
-  </ul>
-  <div class="card-body">
-    <a href="mailto:{{match[2]}}" class="card-link">Contact</a>
-    <a href="#" class="card-link">Chat</a>
-  </div>
-</div>
+        <div class="card-body bg-dark text-white">
+            <h5 class="card-title">{{match[1]}}</h5>
+            <h5 class="card-title">{{getage(match[5])}}, {{match[3]}}</h5>
+        </div>
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item bg-dark text-white">{{match[7]}}</li>
+        </ul>
+
+        <div class="card-body bg-dark">
+            <a href="mailto:{{match[2]}}" class="card-link">Contact</a>
+            <a href="#" class="card-link">Chat</a>
+        </div>
+    </div>
     <br>
+
     {%endfor%}
 </div>
-
 
 </body>
 {% endblock %}
