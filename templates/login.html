@@ -11,15 +11,25 @@
 </form>-->
 
 <body>
-    <div class="jumbotron">
-        <h1 class="logo">GYMDER</h1>
-        <h2 class="logo">LOGIN</h2>
+          <div class="jumbotron">
+        <div class="container pb-3">
+          <h1 class="display-3">Gymder</h1>
+          <p class="display-4 text-muted">Login to Your Account Below</p>
+        </div>
+              <hr class=" py-4">
+                      <div class="row justify-content-center">
+                      <div class="col-md-6 pull-left">
+
         <form method="POST" action="/login">
         {{ form.hidden_tag() }}
         {{ form.username.label }} {{ form.username(size=30) }}
         {{ form.password.label }} {{ form.password(size=20) }}
         <input type="submit" value="login">
         </form>
-    </div>
+                      </div>
+                      </div>
+        </div>
+      </div>
+
 </body>
 {% endblock %}

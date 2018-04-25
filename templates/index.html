@@ -4,16 +4,84 @@
 {% block body %}
 <body background="../static/wht2.png">
     {% block content %}
-                    {% if not current_user.is_authenticated%}
-    <div class="jumbotron">
-        <h1 class="logo" align="center">GYMDER</h1>
-        <p align="center"><a class="btn btn-lg btn-success" href="/register" role="button">Sign up today</a>
+    {% if not current_user.is_authenticated%}
+    <!--<div class="jumbotron">-->
+        <!--<h1 class="logo" align="center">GYMDER</h1>-->
+        <!--<p align="center"><a class="btn btn-lg btn-success" href="/register" role="button">Sign up today</a>-->
 
-    </div>
-    {% endif %}
+    <!--</div>-->
+          <div class="jumbotron">
+        <div class="container">
+          <h1 class="display-2">Gymder</h1>
+          <p class="display-4 text-muted">An app for the lonely gym goers</p>
+        <p align="left"><a class="btn btn-lg btn-success" href="/register" role="button">Sign up today</a>
+        </div>
+      </div>
+    <div class="container ">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="col-md-4">
+            <h2>Matching Algorithm</h2>
+            <p>We have crafted a unique algorithm that matches based on your personal preferences, make sure you update what you are searching for in a gym partner! </p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+          </div>
+          <div class="col-md-4">
+            <h2>About Us</h2>
+            <p>We are an app designed to connect fitness enthusiasts all over the world, sign up today and let's start matching! Make sure you update what you are searching for in a gym partner!</p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+          </div>
+          <div class="col-md-4">
+            <h2>Contact Us</h2>
+            <p>For more information about gymder, please contact us here. Feel free to send us any questions, comments, and any additonal feedback about the app.</p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+          </div>
+        </div>
+
+        <hr>
+
+      </div> <!-- /container -->
+    {% else %}
+
+    <main role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <div class="container">
+          <h1 class="display-3">Welcome to Gymder!</h1>
+          <p>We are an app designed to connect fitness enthusiasts all over the world, let's start matching!</p>
+          <p><a class="btn btn-success btn-lg" href="#" role="button">Learn more »</a></p>
+        </div>
+      </div>
+
+      <div class="container ">
+        <!-- Example row of columns -->
+        <div class="row">
+          <div class="col-md-4">
+            <h2>Match Better!</h2>
+            <p>Do you feel like you're not getting the matches you are looking for? Our algorithm matches based on your preferences, make sure you update what you are searching for in a gym partner!</p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+          </div>
+          <div class="col-md-4">
+            <h2>Fitness Profile</h2>
+            <p>This is where you will share your personal fitness information. Keep this information up to date, this is how we match you with others and others with you. </p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+          </div>
+          <div class="col-md-4">
+            <h2>Contact Us</h2>
+            <p>For more information about gymder, please contact us here. Feel free to send us any questions, comments, and any additonal feedback about the app.</p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+          </div>
+        </div>
+
+        <hr>
+
+      </div> <!-- /container -->
+
+    </main>
+        {% endif %}
+
     {% endblock %}
-    <div class="container">
-    </div>
+
 </body>
 {% endblock %}
 </html>
