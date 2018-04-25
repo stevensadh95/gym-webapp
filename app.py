@@ -103,11 +103,6 @@ def register():
             profile.picture.data.save('static/uploads/' + filename)
 
             path = 'static/uploads/' + filename
-
-            # user_profile = Profile(profile.username.data,profile.name.data,profile.email.data,profile.state.data,
-            #         profile.sex.data,profile.birthday.data, profile.picture.data,profile.bio.data)
-            # add_user(cursor,user_profile)
-
             user_profile = Profile(profile.username.data, profile.name.data, profile.email.data, profile.state.data,
                                    profile.sex.data, profile.birthday.data, path, profile.bio.data)
             add_user(cursor, user_profile)
@@ -126,8 +121,6 @@ def register():
                 login_user(new_user)
 
                 flash("Registered successfully", "info")
-                #return redirect(url_for("index"))
-                #return render_template("sign_up.html", form=form,profile=profile)
                 return redirect(url_for("index"))
 
         else:
@@ -147,10 +140,7 @@ def match_list():
     connection = sqlite3.connect('gymder.db')
     cursor = connection.cursor()
 
-    #currently only returns one match only for some reason.
     matches = get_matches(cursor, username)
-
-    #age = age_from_birthday(matches[0][5]) # need to figure out how to calculate age in template itself.
 
     connection.commit()
     return render_template("matches.html", username=username, matches=matches, getage=age_from_birthday)
@@ -208,21 +198,8 @@ def start_matching():
     else:
         render_template("start_matching.html",other=None)
 
-
-    # maybe use a generator here
-
-    # def load_new_user():
-    #     for user in other_users:
-    #         yield user
-    #     return render_template("start_matching.html", others = other_users)
-    # for user in other_users:
-    #     return render_template("matches.html", username=next(load_new_user))
-
-
-    #age = age_from_birthday(matches[0][5])
-
-    # connection.commit()
     return render_template("index.html")
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -248,43 +225,15 @@ def login():
         return "form not validated"
 
 
-
-
-
-# @app.route('/matches')
-# @login_required
-# def matches():
-#     #user_id = get from session
-#     #my_matches=get_matches(user_id)
-#     return render_template("matches.html",profiles=my_matches)
-
-
-# cursor.execute("""CREATE TABLE user(
-#             username TEXT PRIMARY KEY, name TEXT, email TEXT, state TEXT, sex TEXT,
-#             birthday DATE, picture BLOB, bio BLOB
-#             )""")
-#
-# cursor.execute("""CREATE TABLE match(
-#             username TEXT, other_id TEXT, likes text, date_judged DATE, judged TEXT
-#             )""")
-
-
-def add_user(cursor,p):
+def add_user(cursor, p):
     cursor.execute('''INSERT INTO user(username,name,email,state,sex,birthday,picture,bio)
      VALUES (?,?,?,?,?,?,?,?)''', (p.username, p.name,p.email, p.state, p.sex, p.birthday, p.picture, p.bio))
-
-# needs some work to determine which attributes to edit
-def edit_user(cursor,user_id,name,**attributes):
-    cursor.execute('''UPDATE user
-    SET name='{}'
-    WHERE user_id = {}'''.format(name, user_id))
-    #connection.commit()
 
 
 def like_user(cursor,user,other,isLiked):
     cursor.execute('''INSERT INTO match(username,other_id,likes)
          VALUES (?,?,?)''', (user, other[0], isLiked))
-    #connection.commit()
+
 
 '''
 Returns matches that user has as tuples
@@ -305,51 +254,30 @@ def get_users_to_judge(cursor,username):
 def delete_user(cursor,username):
     cursor.execute("DELETE FROM user WHERE username = '{}'".format(username))
     delete_matches_by_username(cursor,username)
-    #connection.commit()
+
 
 def delete_matches_by_username(cursor,username):
     cursor.execute("DELETE FROM match WHERE username = '{}'".format(username))
     cursor.execute("DELETE FROM match WHERE other_id = '{}'".format(username))
-    #connection.commit()
+
 
 def get_user(cursor,username):
     return cursor.execute("SELECT * from user where username='{}'".format(username)).fetchall()[0]
 
-
-
-#connection.commit() # need to commit changes.
-
-
-
-# print("every user in DB")
-# tuples = cursor.execute('''SELECT * from user''').fetchall()
-# for tuple in tuples:
-#     print(tuple)
-
-# example call for add_user
-# add_user('sadhwani', "steven","sadhwani@mail.usf.edu", "NH", "Male", "December 8 1995", "djk", " ffs)
-
-
-
-# For debugging match table
-# print(cursor.execute('''SELECT * from match''').fetchall())
-
-# To test get_matches function against first DB element
-# print(get_matches("<username>"))
-
-#
-# connection.close()
-
-
 if __name__ == '__main__':
     init_db()
+    connection = sqlite3.connect('gymder.db')
+
+    cursor = connection.cursor()
+
+    cursor.execute("""CREATE TABLE IF NOT EXISTS user(
+                username TEXT PRIMARY KEY, name TEXT, email TEXT, state TEXT, sex TEXT,
+                birthday DATE, picture BLOB, bio BLOB
+                )""")
+
+    cursor.execute("""CREATE TABLE IF NOT EXISTS match(
+                username TEXT, other_id TEXT, likes text, date_judged DATE, judged TEXT
+                )""")
     app.run(port=5000, host='localhost', debug=True)
-
-
-@app.route('/protected')
-@login_required
-def protected():
-    return "protected area"
-
 
 
