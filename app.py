@@ -237,7 +237,7 @@ def login():
                 if user.password == form.password.data:
                     login_user(user)
                     flash("logged in successfully", "success")
-                    return redirect(url_for("index"))
+                    return redirect(url_for("profile"))
                 else:
                     flash("password wrong", "danger")
                     return redirect(url_for("login"))

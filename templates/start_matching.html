@@ -12,18 +12,21 @@
 <div align="center" style="padding:15px;">
     {% if other %}
     <!--<p>{{other}} Debugging purposes </p>-->
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 30rem;">
+                                <div class="card-header bg-dark text-white">
+                        <h5 align="center">@{{other[0]}}</h5>
+                    </div>
         <img class="card-img-top" src="{{other[6]}}" alt="Card image cap">
         <div class="card-body bg-dark text-white">
             <h5 class="card-title">{{other[1]}}</h5> <h5 class="card-title">{{age}}, {{other[3]}}</h5>
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item bg-dark text-white">{{other[7]}}</li>
+            <li class="list-group-item bg-dark text-white"><h3>{{other[7]}}</h3></li>
         </ul>
 
         <form action="/start_matching" method="POST">
-            <input type="submit" class="btn btn-success" style="width:140px" name="submit" value="Yes">
-            <input type="submit" class="btn btn-danger" style="width:140px" name="submit" value="No">
+            <input type="submit" class="btn btn-success" style="width:236px" name="submit" value="Yes">
+            <input type="submit" class="btn btn-danger" style="width:236px" name="submit" value="No">
         </form>
 </div>
 {%endif%}
